@@ -4,8 +4,7 @@
 \alias{ts.trend.variance}
 \title{Time Series Data Generator with Variance Trend}
 \usage{
-ts.trend.variance(N, TS, delta, phi, theta, mu, sigma, omega, seeds,
-  drop = 100)
+ts.trend.variance(N, TS, delta, phi, theta, mu, sigma, omega, seeds)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -25,8 +24,6 @@ ts.trend.variance(N, TS, delta, phi, theta, mu, sigma, omega, seeds,
 \item{omega}{Trend on the variance}
 
 \item{seeds}{Vector of the seeds}
-
-\item{drop}{Number of initial samples to drop (Default: 100)}
 }
 \value{
 N time series of size TS

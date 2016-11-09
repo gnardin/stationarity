@@ -13,7 +13,7 @@
 #' 
 run.test <- function(test, data, alpha){
   
-  result <- 0
+  result <- NA
   
   testName <- tolower(test)
   

@@ -4,8 +4,7 @@
 \alias{ts.trend.autocorrelation}
 \title{Time Series Data Generator with Autocorrelation Trend}
 \usage{
-ts.trend.autocorrelation(N, TS, delta, phis, thetas, mu, sigma, seeds,
-  drop = 100)
+ts.trend.autocorrelation(N, TS, delta, phis, thetas, mu, sigma, seeds)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -23,8 +22,6 @@ ts.trend.autocorrelation(N, TS, delta, phis, thetas, mu, sigma, seeds,
 \item{sigma}{Normal error standard deviation}
 
 \item{seeds}{Vector of the seeds}
-
-\item{drop}{Number of initial samples to drop (Default: 100)}
 }
 \value{
 N time series of size TS

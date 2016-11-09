@@ -4,10 +4,10 @@
 \alias{ts.data.generator}
 \title{Time Series Data Generator}
 \usage{
-ts.data.generator(N, delta, tau, phi, theta, mu, sigma, omega, drop = 0)
+ts.data.generator(TS, delta, tau, phi, theta, mu, sigma, omega)
 }
 \arguments{
-\item{N}{Number of samples}
+\item{TS}{Size of the time series}
 
 \item{delta}{Mean}
 
@@ -22,8 +22,6 @@ ts.data.generator(N, delta, tau, phi, theta, mu, sigma, omega, drop = 0)
 \item{sigma}{Normal error standard deviation}
 
 \item{omega}{Trend on the variance}
-
-\item{drop}{Number of initial samples to drop (Default: 0)}
 }
 \value{
 Time series of size N

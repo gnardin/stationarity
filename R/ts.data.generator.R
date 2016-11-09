@@ -4,7 +4,7 @@
 #' Generates stationary or non-stationary time series data with mean or
 #' variance trend and normal error distribution.
 #' 
-#' @param N Number of samples
+#' @param TS Size of the time series
 #' @param delta Mean
 #' @param tau Trend on the mean
 #' @param phi Matrix of autoregressive parameters over time
@@ -12,7 +12,6 @@
 #' @param mu Normal error mean
 #' @param sigma Normal error standard deviation
 #' @param omega Trend on the variance
-#' @param drop Number of initial samples to drop (Default: 0)
 #' 
 #' @return Time series of size N
 #' 
@@ -22,23 +21,16 @@
 #' @importFrom stats rnorm
 #' @export "ts.data.generator"
 #' 
-ts.data.generator <- function(N, delta, tau, phi, theta, mu, sigma, omega, drop=0){
+ts.data.generator <- function(TS, delta, tau, phi, theta, mu, sigma, omega){
   
-  if(N <= 1){
+  if(TS <= 1){
     stop("The N value must be greater than 1.")
-  }
-  
-  ## Test the number of samples to drop
-  if(drop >= 0){
-    N <- N + drop
-  } else {
-    stop("The drop value cannot be negative.")
   }
   
   ## Number of autoregressive elements
   if(!is.matrix(phi)){
     p <- length(phi)
-    phi <- matrix(rep(phi, each=N), nrow=N, ncol=p)
+    phi <- matrix(rep(phi, each=TS), nrow=TS, ncol=p)
   } else {
     p <- ncol(phi)
   }
@@ -46,7 +38,7 @@ ts.data.generator <- function(N, delta, tau, phi, theta, mu, sigma, omega, drop=
   ## Number of moving average elements
   if(!is.matrix(theta)){
     q <- length(theta)
-    theta <- matrix(rep(theta, each=N), nrow=N, ncol=q)
+    theta <- matrix(rep(theta, each=TS), nrow=TS, ncol=q)
   } else {
     q <- ncol(theta)
   }
@@ -56,18 +48,18 @@ ts.data.generator <- function(N, delta, tau, phi, theta, mu, sigma, omega, drop=
   epsilon <- vector()
   
   ## Error
-  epsilon[1] <- rnorm(1, mu, (sigma + (omega / N)))
+  epsilon[1] <- rnorm(1, mu, (sigma + (omega / TS)))
   
   ## Dependent variable
-  Y[1] <- delta + (tau / N) + epsilon[1]
+  Y[1] <- delta + (tau / TS) + epsilon[1]
   
-  for(t in 2:N){
+  for(t in 2:TS){
     
     ## Error
-    epsilon[t] <- rnorm(1, mu, (sigma + ((omega * t) / N)))
+    epsilon[t] <- rnorm(1, mu, (sigma + ((omega * t) / TS)))
     
     ## Dependent variable
-    Y[t] <- delta + ((tau * t) / N) + epsilon[t]
+    Y[t] <- delta + ((tau * t) / TS) + epsilon[t]
     
     if(p > 0){
       ## Incorporate the autoregression
@@ -84,6 +76,5 @@ ts.data.generator <- function(N, delta, tau, phi, theta, mu, sigma, omega, drop=
     }
   }
   
-  Y <- Y[(drop + 1):N]
   return(Y)
 }

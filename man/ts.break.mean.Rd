@@ -4,7 +4,7 @@
 \alias{ts.break.mean}
 \title{Time Series Data Generator with Break in the Mean}
 \usage{
-ts.break.mean(N, TS, deltas, phi, theta, mu, sigma, seeds, drop = 100)
+ts.break.mean(N, TS, deltas, phi, theta, mu, sigma, seeds)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -22,8 +22,6 @@ ts.break.mean(N, TS, deltas, phi, theta, mu, sigma, seeds, drop = 100)
 \item{sigma}{Normal error standard deviation}
 
 \item{seeds}{Vector of the seeds}
-
-\item{drop}{Number of initial samples to drop (Default: 100)}
 }
 \value{
 N time series of size TS

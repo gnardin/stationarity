@@ -12,7 +12,6 @@
 #' @param mu Normal error mean
 #' @param sigma Normal error standard deviation
 #' @param seeds Vector of the seeds
-#' @param drop Number of initial samples to drop (Default: 100)
 #' 
 #' @return N time series of size TS
 #' 
@@ -21,7 +20,7 @@
 #' 
 #' @export "ts.trend.autocorrelation"
 #' 
-ts.trend.autocorrelation <- function(N, TS, delta, phis, thetas, mu, sigma, seeds, drop=100){
+ts.trend.autocorrelation <- function(N, TS, delta, phis, thetas, mu, sigma, seeds){
   
   if(is.null(seeds)){
     stop("The seeds vector cannot be NULL.")
@@ -39,16 +38,18 @@ ts.trend.autocorrelation <- function(N, TS, delta, phis, thetas, mu, sigma, seed
   
   fP <- phis[1]
   sP <- phis[2]
+  phiL <- as.matrix(fP + (((sP - fP) / (TS - 1)) * 0:(TS - 1)))
   
   fT <- thetas[1]
   sT <- thetas[2]
+  thetaL <- as.matrix(fT + (((sT - fT) / (TS - 1)) * 0:(TS - 1)))
+  
   
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    phi <- fP + (((sP - fP) / (TS - 1)) * 0:(TS - 1))
-    theta <- fT + (((sT - fT) / (TS - 1)) * 0:(TS - 1))
-    ts[,i] <- ts.data.generator(TS, delta, 0, phi, theta, mu, sigma, 0, drop=drop)
+    
+    ts[,i] <- ts.data.generator(TS, delta, 0, phiL, thetaL, mu, sigma, 0)
   }
   
   return(ts)

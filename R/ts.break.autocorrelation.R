@@ -12,7 +12,6 @@
 #' @param mu Normal error mean
 #' @param sigma Normal error standard deviation
 #' @param seeds Vector of the seeds
-#' @param drop Number of initial samples to drop (Default: 100)
 #' 
 #' @return N time series of size TS
 #' 
@@ -21,7 +20,7 @@
 #' 
 #' @export "ts.break.autocorrelation"
 #' 
-ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, mu, sigma, seeds, drop=100){
+ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, mu, sigma, seeds){
   
   if(is.null(seeds)){
     stop("The seeds vector cannot be NULL.")
@@ -43,8 +42,9 @@ ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, mu, sigma, seeds
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    ts[,i] <- c(ts.data.generator(fHalf, delta, 0, phis[1], thetas[1], mu, sigma, 0, drop=drop),
-        ts.data.generator(sHalf, delta, 0, phis[2], thetas[2], mu, sigma, 0, drop=drop))
+    
+    ts[,i] <- c(ts.data.generator(fHalf, delta, 0, phis[1], thetas[1], mu, sigma, 0),
+        ts.data.generator(sHalf, delta, 0, phis[2], thetas[2], mu, sigma, 0))
   }
   
   return(ts)

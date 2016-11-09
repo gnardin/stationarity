@@ -13,7 +13,6 @@
 #' @param sigma Normal error standard deviation
 #' @param omega Trend on the variance
 #' @param seeds Vector of the seeds
-#' @param drop Number of initial samples to drop (Default: 100)
 #' 
 #' @return N time series of size TS
 #' 
@@ -22,7 +21,7 @@
 #' 
 #' @export "ts.trend.variance"
 #' 
-ts.trend.variance <- function(N, TS, delta, phi, theta, mu, sigma, omega, seeds, drop=100){
+ts.trend.variance <- function(N, TS, delta, phi, theta, mu, sigma, omega, seeds){
   
   if(is.null(seeds)){
     stop("The seeds vector cannot be NULL.")
@@ -37,7 +36,7 @@ ts.trend.variance <- function(N, TS, delta, phi, theta, mu, sigma, omega, seeds,
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    ts[,i] <- ts.data.generator(TS, delta, 0, phi, theta, mu, sigma, omega, drop=drop)
+    ts[,i] <- ts.data.generator(TS, delta, 0, phi, theta, mu, sigma, omega)
   }
   
   return(ts)

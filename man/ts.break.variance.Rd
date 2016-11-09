@@ -4,7 +4,7 @@
 \alias{ts.break.variance}
 \title{Time Series Data Generator with Break in the Variance}
 \usage{
-ts.break.variance(N, TS, delta, phi, theta, mu, sigmas, seeds, drop = 100)
+ts.break.variance(N, TS, delta, phi, theta, mu, sigmas, seeds)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -22,8 +22,6 @@ ts.break.variance(N, TS, delta, phi, theta, mu, sigmas, seeds, drop = 100)
 \item{sigmas}{Vector with two error standard deviation values}
 
 \item{seeds}{Vector of the seeds}
-
-\item{drop}{Number of initial samples to drop (Default: 100)}
 }
 \value{
 N time series of size TS

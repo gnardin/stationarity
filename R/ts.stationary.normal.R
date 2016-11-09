@@ -10,7 +10,6 @@
 #' @param mu Normal error mean
 #' @param sigma Normal error standard deviation
 #' @param seeds Vector of the seeds
-#' @param drop Number of initial samples to drop (Default: 100)
 #' 
 #' @return N time series of size TS
 #' 
@@ -19,7 +18,7 @@
 #' 
 #' @export "ts.stationary.normal"
 #' 
-ts.stationary.normal <- function(N, TS, phi, theta, mu, sigma, seeds, drop=100){
+ts.stationary.normal <- function(N, TS, phi, theta, mu, sigma, seeds){
   
   if(is.null(seeds)){
     stop("The seeds vector cannot be NULL.")
@@ -34,7 +33,7 @@ ts.stationary.normal <- function(N, TS, phi, theta, mu, sigma, seeds, drop=100){
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    ts[,i] <- ts.data.generator(TS, 0, 0, phi, theta, mu, sigma, 0, drop=drop)
+    ts[,i] <- ts.data.generator(TS, 0, 0, phi, theta, mu, sigma, 0)
   }
   
   return(ts)

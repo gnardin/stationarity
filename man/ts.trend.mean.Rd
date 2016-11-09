@@ -4,7 +4,7 @@
 \alias{ts.trend.mean}
 \title{Time Series Data Generator with Mean Trend}
 \usage{
-ts.trend.mean(N, TS, delta, tau, phi, theta, mu, sigma, seeds, drop = 100)
+ts.trend.mean(N, TS, delta, tau, phi, theta, mu, sigma, seeds)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -24,8 +24,6 @@ ts.trend.mean(N, TS, delta, tau, phi, theta, mu, sigma, seeds, drop = 100)
 \item{sigma}{Normal error standard deviation}
 
 \item{seeds}{Vector of the seeds}
-
-\item{drop}{Number of initial samples to drop (Default: 100)}
 }
 \value{
 N time series of size TS
