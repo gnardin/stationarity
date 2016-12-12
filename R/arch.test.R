@@ -17,9 +17,10 @@ arch.test <- function(data, alpha){
   
   if(class(model) != "try-error"){
     p <- NULL
-    tryCatch(p <- ArchTest(model$residuals, lags=1, demean=FALSE))
+    tryCatch(p <- ArchTest(model$residuals, lags=1, demean=FALSE),
+        error=function(e){return(NA)})
     
-    if(!is.null(p)){
+    if(!is.na(p) && !is.null(p)){
       if(p$p.value <= alpha){
         return(NONSTATIONARY)
       } else {

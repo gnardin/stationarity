@@ -36,7 +36,7 @@ ts.trend.variance <- function(N, TS, delta, phi, theta, mu, sigma, omega, seeds)
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    ts[,i] <- ts.data.generator(TS, delta, 0, phi, theta, mu, sigma, omega)
+    ts[,i] <- ts.data.generator(TS, 0, delta, 0, phi, theta, mu, sigma, omega)
   }
   
   return(ts)

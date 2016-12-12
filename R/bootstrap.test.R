@@ -14,9 +14,11 @@ bootstrap.test <- function(data, alpha){
   num <- log2(length(data))
   if((num %% as.integer(num)) == 0){
     p <- NULL
+    
     tryCatch(p <- BootTOS(data)$p.value,
         error=function(e){return(NA)})
-    if(!is.null(p)){
+    
+    if(!is.na(p) && !is.null(p)){
       if(p <= alpha){
         return(NONSTATIONARY)
       } else {

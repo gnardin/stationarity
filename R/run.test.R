@@ -67,7 +67,12 @@ run.test <- function(test, data, alpha){
     }
     
     result <- structure.change.test(data, alpha, type, window)
-  }
+  } else if(substr(testName, 1, 3) == "cpm"){
+      type <- NULL
+      tryCatch(type <- substr(test, 5, nchar(test)))
+      
+      result <- cpm.test(data, type)
+    }
   
   return(result)
 }

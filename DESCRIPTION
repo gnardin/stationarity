@@ -8,7 +8,7 @@ Maintainer: Luis G. Nardin <gnardin@gmail.com>
 URL: https://github.com/gnardin/stationarity
 BugReports: https://github.com/gnardin/stationarity/issues
 Description: Generates stationary and non-stationary time series and tests stationarity.
-Depends: R (>= 3.1.0), tseries, fUnitRoots, fractal, locits, costat, changepoint, timeSeries, FinTS, lmtest, strucchange
+Depends: R (>= 3.1.0), tseries, fUnitRoots, fractal, locits, costat, changepoint, timeSeries, FinTS, lmtest, strucchange, cpm
 License: LGPL (>= 3)
 LazyData: TRUE
 Encoding: UTF-8

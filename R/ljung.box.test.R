@@ -17,9 +17,10 @@ ljung.box.test <- function(data, alpha){
   
   if(class(model) != "try-error"){
     p <- NULL
-    tryCatch(p <- Box.test(model$residuals, lag=1, type="Ljung-Box"))
+    tryCatch(p <- Box.test(model$residuals, lag=1, type="Ljung-Box"),
+        error=function(e){return(NA)})
     
-    if(!is.null(p)){
+    if(!is.na(p) && !is.null(p)){
       if(p$p.value <= alpha){
         return(NONSTATIONARY)
       } else {

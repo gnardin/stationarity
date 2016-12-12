@@ -14,7 +14,8 @@ priestley.subba.rao.test <- function(data, alpha){
   p <- NULL
   tryCatch(p <- stationarity(data, significance=alpha),
       error=function(e){return(NA)})
-  if(!is.null(p)){
+  
+  if(!is.na(p) && !is.null(p)){
     if((attr(p, "pvals")[1]) <= alpha){
       return(NONSTATIONARY)
     } else {

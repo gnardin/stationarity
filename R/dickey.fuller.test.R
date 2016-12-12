@@ -14,7 +14,8 @@ dickey.fuller.test <- function(data, alpha){
   p <- NULL
   tryCatch(p <- adf.test(data, alternative="stationary", k=0)$p.value,
       error=function(e){return(NA)})
-  if(!is.na(p) && !is.null(p) && !is.nan(p)){
+  
+  if(!is.na(p) && !is.null(p)){
     if(p <= alpha){
       return(STATIONARY)
     } else {

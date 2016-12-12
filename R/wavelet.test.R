@@ -13,10 +13,12 @@
 wavelet.test <- function(data, alpha){
   num <- log2(length(data))
   if((num %% as.integer(num)) == 0){
+    
     p <- NULL
     tryCatch(p <- hwtos2(data, alpha=alpha),
         error=function(e){return(NA)})
-    if(!is.null(p)){
+    
+    if(!is.na(p) && !is.null(p)){
       if(p$nreject < 1){
         return(STATIONARY)
       } else {

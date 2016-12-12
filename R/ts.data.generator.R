@@ -5,6 +5,7 @@
 #' variance trend and normal error distribution.
 #' 
 #' @param TS Size of the time series
+#' @param y0 Y[0] value
 #' @param delta Mean
 #' @param tau Trend on the mean
 #' @param phi Matrix of autoregressive parameters over time
@@ -16,12 +17,12 @@
 #' @return Time series of size N
 #' 
 #' @examples
-#' ts.data.generator(100, 0, 0, 1, 0, 0, 1, 0)
+#' ts.data.generator(100, 0, 0, 0, 1, 0, 0, 1, 0)
 #' 
 #' @importFrom stats rnorm
 #' @export "ts.data.generator"
 #' 
-ts.data.generator <- function(TS, delta, tau, phi, theta, mu, sigma, omega){
+ts.data.generator <- function(TS, y0, delta, tau, phi, theta, mu, sigma, omega){
   
   if(TS <= 1){
     stop("The N value must be greater than 1.")
@@ -51,7 +52,7 @@ ts.data.generator <- function(TS, delta, tau, phi, theta, mu, sigma, omega){
   epsilon[1] <- rnorm(1, mu, (sigma + (omega / TS)))
   
   ## Dependent variable
-  Y[1] <- delta + (tau / TS) + epsilon[1]
+  Y[1] <- y0 + delta + (tau / TS) + epsilon[1]
   
   for(t in 2:TS){
     

@@ -49,7 +49,7 @@ ts.trend.autocorrelation <- function(N, TS, delta, phis, thetas, mu, sigma, seed
   for(i in 1:N){
     set.seed(seeds[i])
     
-    ts[,i] <- ts.data.generator(TS, delta, 0, phiL, thetaL, mu, sigma, 0)
+    ts[,i] <- ts.data.generator(TS, 0, delta, 0, phiL, thetaL, mu, sigma, 0)
   }
   
   return(ts)

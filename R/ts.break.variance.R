@@ -38,8 +38,14 @@ ts.break.variance <- function(N, TS, delta, phi, theta, mu, sigmas, seeds){
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    ts[,i] <- c(ts.data.generator(firstHalf, delta, 0, phi, theta, mu, sigmas[1], 0),
-        ts.data.generator(secondHalf, delta, 0, phi, theta, mu, sigmas[2], 0))
+    
+    ts1 <- ts.data.generator(firstHalf, 0, delta, 0,
+        phi, theta, mu, sigmas[1], 0)
+    
+    ts2 <- ts.data.generator(secondHalf, ts1[length(ts1)], delta, 0,
+        phi, theta, mu, sigmas[2], 0)
+        
+    ts[,i] <- c(ts1, ts2)
   }
   
   return(ts)

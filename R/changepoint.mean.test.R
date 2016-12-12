@@ -15,9 +15,10 @@
 #' 
 changepoint.mean.test <- function(data, alpha, penalty, method){
   p <- NULL
-  tryCatch(p <- cpt.mean(data, penalty=penalty, method=method))
+  tryCatch(p <- cpt.mean(data, penalty=penalty, method=method),
+      error=function(e){return(NA)})
   
-  if(!is.null(p)){
+  if(!is.na(p) && !is.null(p)){
     if(ncpts(p) != 0){
       return(NONSTATIONARY)
     } else {

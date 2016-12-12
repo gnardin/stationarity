@@ -43,8 +43,13 @@ ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, mu, sigma, seeds
   for(i in 1:N){
     set.seed(seeds[i])
     
-    ts[,i] <- c(ts.data.generator(fHalf, delta, 0, phis[1], thetas[1], mu, sigma, 0),
-        ts.data.generator(sHalf, delta, 0, phis[2], thetas[2], mu, sigma, 0))
+    ts1 <- ts.data.generator(fHalf, 0, delta, 0,
+        phis[1], thetas[1], mu, sigma, 0)
+    
+    ts2 <- ts.data.generator(sHalf, ts1[length(ts1)], delta, 0,
+        phis[2], thetas[2], mu, sigma, 0)
+    
+    ts[,i] <- c(ts1, ts2)
   }
   
   return(ts)

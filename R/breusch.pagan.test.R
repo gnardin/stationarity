@@ -16,9 +16,10 @@ breusch.pagan.test <- function(data, alpha){
   lag <- filter(data, c(0,1), method="conv", sides=1)
   
   p <- NULL
-  tryCatch(p <- bgtest(data ~ 1 + lag, order=1, type="F", fill=NA))
+  tryCatch(p <- bgtest(data ~ 1 + lag, order=1, type="F", fill=NA),
+      error=function(e){return(NA)})
   
-  if(!is.null(p)){
+  if(!is.na(p) && !is.null(p)){
     if(p$p.value <= alpha){
       return(NONSTATIONARY)
     } else {

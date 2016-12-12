@@ -5,16 +5,16 @@
 #' 
 #' @param data Time series data
 #' @param alpha Value of alpha for the statistics test
-#' @param mode 1: ALGO-ERS, 2: ALGO-ERS+SC50, 3: ALGO-ERS+SC60,
-#' 4: ALGO-ERS+SC70, 5: ALGO-ERS+SC80, 6: ALGO-ERS+SC90
+#' @param mode 0: ALGO-ERS, X: ALGO-ERS+SC[X]
 #' 
-#' @return 0: Non-Stationary, 1: Stationary, NA: Unable to test
+#' @return ERS, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,
+#' NA: Not used test)
 #' 
 #' @export "algo.test"
 #' 
 algo.test <- function(data, alpha, mode){
   
-  result <- NA
+  result <- rep(NA, 5)
   
   # ERS tests Positive Unit-Root
   #           Trend Mean
@@ -24,38 +24,54 @@ algo.test <- function(data, alpha, mode){
   
   if(!is.na(test)){
     if(test == NONSTATIONARY){
-      result <- NONSTATIONARY
+      result[1] <- NONSTATIONARY
+      result[5] <- NONSTATIONARY
     } else {
+      result[1] <- STATIONARY
+      
       # BG tests Trend/Break AutoCorrelation
       #          Misclassified Break Mean and Trend Variance
       bg <- breusch.godfrey.test(data, alpha)
       
       if(!is.na(bg)){
         if(bg == NONSTATIONARY){
-          result <- NONSTATIONARY
+          result[2] <- NONSTATIONARY
+          result[5] <- NONSTATIONARY
         } else {
+          result[2] <- STATIONARY
+          
           # AT tests Trend/Break Variance
           at <- arch.test(data, alpha)
           
           if(!is.na(at)){
             if(at == NONSTATIONARY){
-              result <- NONSTATIONARY
+              result[3] <- NONSTATIONARY
+              result[5] <- NONSTATIONARY
             } else {
+              result[3] <- STATIONARY
               
-              if(mode != 1){
+              ## Adjust Structure Change test percentage size
+              if(mode > 0){
                 # SC test Break Mean
-                window <- ((mode - 2) / 10) + 0.5
+                if(mode > 100){
+                  window <- 1
+                } else {
+                  window <- mode / 100
+                }
+                
                 sc <- structure.change.test(data, alpha, "ME", window)
                 
                 if(!is.na(sc)){
                   if(sc == NONSTATIONARY){
-                    result <- NONSTATIONARY
+                    result[4] <- NONSTATIONARY
+                    result[5] <- NONSTATIONARY
                   } else {
-                    result <- STATIONARY
+                    result[4] <- STATIONARY
+                    result[5] <- STATIONARY
                   }
                 }
               } else {
-                result <- STATIONARY
+                result[5] <- STATIONARY
               }
             }
           }
@@ -63,5 +79,6 @@ algo.test <- function(data, alpha, mode){
       }
     }
   }
+  
   return(result)
 }

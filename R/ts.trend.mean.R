@@ -36,7 +36,7 @@ ts.trend.mean <- function(N, TS, delta, tau, phi, theta, mu, sigma, seeds){
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    ts[,i] <- ts.data.generator(TS, delta, tau, phi, theta, mu, sigma, 0)
+    ts[,i] <- ts.data.generator(TS, 0, delta, tau, phi, theta, mu, sigma, 0)
   }
   
   return(ts)
