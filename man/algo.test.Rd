@@ -4,17 +4,19 @@
 \alias{algo.test}
 \title{Sequential Test Procedure Algorithm Stationarity Test}
 \usage{
-algo.test(data, alpha, mode)
+algo.test(data, alpha, mode, window)
 }
 \arguments{
 \item{data}{Time series data}
 
 \item{alpha}{Value of alpha for the statistics test}
 
-\item{mode}{0: ALGO-ERS, X: ALGO-ERS+SC[X]}
+\item{mode}{1: ERS, 2: SP}
+
+\item{window}{Structural change window size}
 }
 \value{
-ERS, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,
+ERS|SP, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,
 NA: Not used test)
 }
 \description{

@@ -5,25 +5,35 @@
 #' 
 #' @param data Time series data
 #' @param alpha Value of alpha for the statistics test
-#' @param mode 0: ALGO-ERS, X: ALGO-ERS+SC[X]
+#' @param mode 1: ERS, 2: SP
+#' @param window Structural change window size
 #' 
-#' @return ERS, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,
+#' @return ERS|SP, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,
 #' NA: Not used test)
 #' 
 #' @export "algo.test"
 #' 
-algo.test <- function(data, alpha, mode){
+algo.test <- function(data, alpha, mode, window){
   
   result <- rep(NA, 5)
   
-  # ERS tests Positive Unit-Root
-  #           Trend Mean
-  #           Break of large time series
+  # ERS | SP tests Positive Unit-Root
+  #                Trend Mean
+  #                Break of large time series
+  finish <- FALSE
   test <- NA
-  test <- elliot.rothenberg.stock.test(data, alpha)
+  if(mode == 1){
+    test <- elliot.rothenberg.stock.test(data, alpha)
+    
+    if(is.na(test)){
+      finish <- TRUE
+    }
+  } else if(mode == 2){
+    test <- schmidt.phillips.test(data, alpha)
+  }
   
-  if(!is.na(test)){
-    if(test == NONSTATIONARY){
+  if(!finish){
+    if((!is.na(test)) & (test == NONSTATIONARY)){
       result[1] <- NONSTATIONARY
       result[5] <- NONSTATIONARY
     } else {
@@ -51,27 +61,25 @@ algo.test <- function(data, alpha, mode){
               result[3] <- STATIONARY
               
               ## Adjust Structure Change test percentage size
-              if(mode > 0){
-                # SC test Break Mean
-                if(mode > 100){
-                  window <- 1
-                } else {
-                  window <- mode / 100
-                }
-                
-                sc <- structure.change.test(data, alpha, "ME", window)
-                
-                if(!is.na(sc)){
-                  if(sc == NONSTATIONARY){
-                    result[4] <- NONSTATIONARY
-                    result[5] <- NONSTATIONARY
-                  } else {
-                    result[4] <- STATIONARY
-                    result[5] <- STATIONARY
-                  }
-                }
+              # SC test Break Mean
+              if(window > 100){
+                window <- 1
+              } else if(window < 0){
+                window <- 0
               } else {
-                result[5] <- STATIONARY
+                window <- window / 100
+              }
+              
+              sc <- structure.change.test(data, alpha, "ME", window)
+              
+              if(!is.na(sc)){
+                if(sc == NONSTATIONARY){
+                  result[4] <- NONSTATIONARY
+                  result[5] <- NONSTATIONARY
+                } else {
+                  result[4] <- STATIONARY
+                  result[5] <- STATIONARY
+                }
               }
             }
           }
