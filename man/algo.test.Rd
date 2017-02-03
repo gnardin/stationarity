@@ -11,11 +11,11 @@ algo.test(data, alpha, mode)
 
 \item{alpha}{Value of alpha for the statistics test}
 
-\item{mode}{1: ALGO-ERS, 2: ALGO-ERS+SC50, 3: ALGO-ERS+SC60,
-4: ALGO-ERS+SC70, 5: ALGO-ERS+SC80, 6: ALGO-ERS+SC90}
+\item{mode}{0: ALGO-ERS, X: ALGO-ERS+SC[X]}
 }
 \value{
-0: Non-Stationary, 1: Stationary, NA: Unable to test
+ERS, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,
+NA: Not used test)
 }
 \description{
 Sequential test procedure algorithm stationarity test.

@@ -12,15 +12,16 @@
 #' @param mu Normal error mean
 #' @param sigma Normal error standard deviation
 #' @param seeds Vector of the seeds
+#' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
 #' 
 #' @examples
-#' ts.break.mean(5, 5000, c(0, 2), 0.9, 0, 0, 1, c(645,983,653,873,432))
+#' ts.break.mean(5, 5000, c(0, 2), 0.9, 0, 0, 1, c(645,983,653,873,432), 10)
 #' 
 #' @export "ts.break.mean"
 #' 
-ts.break.mean <- function(N, TS, deltas, phi, theta, mu, sigma, seeds){
+ts.break.mean <- function(N, TS, deltas, phi, theta, mu, sigma, seeds, burnin){
   
   if(is.null(seeds)){
     stop("The seeds vector cannot be NULL.")
@@ -42,10 +43,10 @@ ts.break.mean <- function(N, TS, deltas, phi, theta, mu, sigma, seeds){
     set.seed(seeds[i])
     
     ts1 <- ts.data.generator(firstHalf, 0, deltas[1], 0,
-        phi, theta, mu, sigma, 0)
+        phi, theta, mu, sigma, 0, burnin)
     
     ts2 <- ts.data.generator(secondHalf, ts1[length(ts1)], deltas[2], 0,
-        phi, theta, mu, sigma, 0)
+        phi, theta, mu, sigma, 0, 0)
     
     ts[,i] <- c(ts1, ts2)
   }

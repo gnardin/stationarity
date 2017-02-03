@@ -4,7 +4,7 @@
 \alias{ts.break.variance}
 \title{Time Series Data Generator with Break in the Variance}
 \usage{
-ts.break.variance(N, TS, delta, phi, theta, mu, sigmas, seeds)
+ts.break.variance(N, TS, delta, phi, theta, mu, sigmas, seeds, burnin)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -22,6 +22,8 @@ ts.break.variance(N, TS, delta, phi, theta, mu, sigmas, seeds)
 \item{sigmas}{Vector with two error standard deviation values}
 
 \item{seeds}{Vector of the seeds}
+
+\item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }
 \value{
 N time series of size TS
@@ -31,7 +33,7 @@ Generates non-stationary time series data with break in the variance and
 normal error distribution.
 }
 \examples{
-ts.break.variance(5, 5000, 0, 0.9, 0, 0, c(1, 2), c(645,983,653,873,432))
+ts.break.variance(5, 5000, 0, 0.9, 0, 0, c(1, 2), c(645,983,653,873,432), 10)
 
 }
 

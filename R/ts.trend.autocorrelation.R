@@ -12,15 +12,16 @@
 #' @param mu Normal error mean
 #' @param sigma Normal error standard deviation
 #' @param seeds Vector of the seeds
+#' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
 #' 
 #' @examples
-#' ts.trend.autocorrelation(5, 5000, 0, c(-0.9, 0.9), c(0, 0), 0, 1, c(645,983,653,873,432))
+#' ts.trend.autocorrelation(5, 5000, 0, c(-0.9, 0.9), c(0, 0), 0, 1, c(645,983,653,873,432), 10)
 #' 
 #' @export "ts.trend.autocorrelation"
 #' 
-ts.trend.autocorrelation <- function(N, TS, delta, phis, thetas, mu, sigma, seeds){
+ts.trend.autocorrelation <- function(N, TS, delta, phis, thetas, mu, sigma, seeds, burnin){
   
   if(is.null(seeds)){
     stop("The seeds vector cannot be NULL.")
@@ -48,8 +49,7 @@ ts.trend.autocorrelation <- function(N, TS, delta, phis, thetas, mu, sigma, seed
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    
-    ts[,i] <- ts.data.generator(TS, 0, delta, 0, phiL, thetaL, mu, sigma, 0)
+    ts[,i] <- ts.data.generator(TS, 0, delta, 0, phiL, thetaL, mu, sigma, 0, burnin)
   }
   
   return(ts)

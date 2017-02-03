@@ -13,15 +13,16 @@
 #' @param sigma Normal error standard deviation
 #' @param omega Trend on the variance
 #' @param seeds Vector of the seeds
+#' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
 #' 
 #' @examples
-#' ts.trend.variance(5, 5000, 0, 0.9, 0, 0, 1, 2, c(645,983,653,873,432))
+#' ts.trend.variance(5, 5000, 0, 0.9, 0, 0, 1, 2, c(645,983,653,873,432), 10)
 #' 
 #' @export "ts.trend.variance"
 #' 
-ts.trend.variance <- function(N, TS, delta, phi, theta, mu, sigma, omega, seeds){
+ts.trend.variance <- function(N, TS, delta, phi, theta, mu, sigma, omega, seeds, burnin){
   
   if(is.null(seeds)){
     stop("The seeds vector cannot be NULL.")
@@ -36,7 +37,7 @@ ts.trend.variance <- function(N, TS, delta, phi, theta, mu, sigma, omega, seeds)
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    ts[,i] <- ts.data.generator(TS, 0, delta, 0, phi, theta, mu, sigma, omega)
+    ts[,i] <- ts.data.generator(TS, 0, delta, 0, phi, theta, mu, sigma, omega, burnin)
   }
   
   return(ts)

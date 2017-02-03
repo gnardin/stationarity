@@ -4,7 +4,7 @@
 \alias{ts.break.mean}
 \title{Time Series Data Generator with Break in the Mean}
 \usage{
-ts.break.mean(N, TS, deltas, phi, theta, mu, sigma, seeds)
+ts.break.mean(N, TS, deltas, phi, theta, mu, sigma, seeds, burnin)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -22,6 +22,8 @@ ts.break.mean(N, TS, deltas, phi, theta, mu, sigma, seeds)
 \item{sigma}{Normal error standard deviation}
 
 \item{seeds}{Vector of the seeds}
+
+\item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }
 \value{
 N time series of size TS
@@ -31,7 +33,7 @@ Generates non-stationary time series data with break in the mean and
 normal error distribution.
 }
 \examples{
-ts.break.mean(5, 5000, c(0, 2), 0.9, 0, 0, 1, c(645,983,653,873,432))
+ts.break.mean(5, 5000, c(0, 2), 0.9, 0, 0, 1, c(645,983,653,873,432), 10)
 
 }
 

@@ -21,7 +21,7 @@ dt3steps.test <- function(data, alpha){
   }
   
   ## Stationary
-  if(result == 1){
+  if(result == STATIONARY){
     
     result <- priestley.subba.rao.test(data, alpha)
     steps <- rbind(steps, c("PSR", result))
@@ -30,19 +30,19 @@ dt3steps.test <- function(data, alpha){
     }
     
     ## Stationary
-    if(result == 1){
+    if(result == STATIONARY){
       result <- bootstrap.test(data, alpha)
       steps <- rbind(steps, c("BOOTSTRAP", result))
     }
     
     ## Non-Stationary
-  } else if(result == 0){
+  } else if(result == NONSTATIONARY){
     result <- elliot.rothenberg.stock.test(data, alpha)
     steps <- rbind(steps, c("ERS", result))
   }
   
   steps <- data.frame(as.character(steps[,1]),
-      as.integer(steps[,2]), stringsAsFactors=FALSE)
+      as.integer(steps[, 2]), stringsAsFactors = FALSE)
   names(steps) <- c("Test", "Result")
   
   return(list(result, steps))
