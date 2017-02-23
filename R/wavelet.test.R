@@ -18,7 +18,7 @@ wavelet.test <- function(data, alpha){
     tryCatch(p <- hwtos2(data, alpha=alpha),
         error=function(e){return(NA)})
     
-    if(!is.na(p) && !is.null(p)){
+    if(!is.null(p) && !is.na(p)){
       if(p$nreject < 1){
         return(STATIONARY)
       } else {

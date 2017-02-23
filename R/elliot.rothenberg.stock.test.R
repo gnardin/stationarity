@@ -15,7 +15,7 @@ elliot.rothenberg.stock.test <- function(data, alpha){
   tryCatch(p <- urersTest(data, type="DF-GLS", model="constant", doplot=FALSE),
       error=function(e){return(NA)})
   
-  if(!is.na(p) && !is.null(p)){
+  if(!is.null(p) && !is.na(p)){
     if(!is.na(p@test$test@teststat)){
       if(p@test$test@teststat <= p@test$test@cval[2]){
         return(STATIONARY)

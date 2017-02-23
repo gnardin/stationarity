@@ -19,7 +19,7 @@ breusch.godfrey.test <- function(data, alpha){
   tryCatch(p <- bgtest(data ~ 1 + lag, order=1, type="F", fill=NA),
       error=function(e){return(NA)})
   
-  if(!is.na(p) && !is.null(p)){
+  if(!is.null(p) && !is.na(p)){
     if(p$p.value <= alpha){
       return(NONSTATIONARY)
     } else {

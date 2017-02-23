@@ -15,7 +15,7 @@ phillips.perron.test <- function(data, alpha){
   tryCatch(p <- pp.test(data, alternative="stationary")$p.value,
       error=function(e){return(NA)})
   
-  if(!is.na(p) && !is.null(p)){
+  if(!is.null(p) && !is.na(p)){
     if(p <= alpha){
       return(STATIONARY)
     } else {

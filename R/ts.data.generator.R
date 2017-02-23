@@ -27,9 +27,7 @@
 #' 
 ts.data.generator <- function(TS, y0, delta, tau, phi, theta, mu, sigma, omega, burnin){
   
-  if(TS <= 1){
-    stop("The N value must be greater than 1.")
-  }
+  stopifnot(TS > 1)
   
   ## Number of autoregressive elements
   if(!is.matrix(phi)){

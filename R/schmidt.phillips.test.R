@@ -15,7 +15,7 @@ schmidt.phillips.test <- function(data, alpha){
   tryCatch(p <- urspTest(data, signif=alpha, doplot=FALSE),
       error=function(e){return(NA)})
   
-  if(!is.na(p) && !is.null(p)){
+  if(!is.null(p) && !is.na(p)){
     if(!is.na(p@test$test@teststat)){
       if(p@test$test@teststat <= p@test$test@cval){
         return(STATIONARY)

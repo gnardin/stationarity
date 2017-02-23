@@ -24,7 +24,7 @@ cpm.test <- function(data, type){
   tryCatch(p <- detectChangePoint(data, cpmType=types[index]),
       error=function(e){return(NA)})
   
-  if(!is.na(p) && !is.null(p)){
+  if(!is.null(p) && !is.na(p)){
     if(p$changeDetected){
       return(NONSTATIONARY)
     } else {

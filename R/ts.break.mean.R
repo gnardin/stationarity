@@ -23,17 +23,8 @@
 #' 
 ts.break.mean <- function(N, TS, deltas, phi, theta, mu, sigma, seeds, burnin){
   
-  if(is.null(seeds)){
-    stop("The seeds vector cannot be NULL.")
-  } else if(N <= 0){
-    stop("N must be greater than 0.")
-  } else if(TS <= 0){
-    stop("TS must be greater than 0.")
-  } else if(N > length(seeds)){
-    stop("The seeds vector size must be greater than or equal to N.")
-  } else if(length(deltas) != 2){
-    stop("The deltas must be a vector with 2 elements.")
-  }
+  stopifnot(!is.null(seeds), N > 0, TS > 1, N <= length(seeds),
+      length(deltas) == 2)
   
   firstHalf <- as.integer(TS / 2)
   secondHalf <- TS - firstHalf
