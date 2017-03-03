@@ -38,6 +38,8 @@ run.test <- function(test, data, alpha){
     result <- wavelet.test(data, alpha)
   } else if(testName == "bootstrap"){
     result <- bootstrap.test(data, alpha)
+  } else if(testName == "bootwptos"){
+    result <- bootwptos.test(data, alpha)
   } else if(substr(testName, 1, 4) == "cptm"){
     method <- NULL
     tryCatch(method <- substr(test, 6, nchar(test)))

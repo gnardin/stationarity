@@ -11,6 +11,7 @@
 #' @return 0: Non-Stationary, 1: Stationary, NA: Unable to test
 #' 
 #' @importFrom cpm detectChangePoint
+#' @importFrom stats lm
 #' 
 cpm.test <- function(data, type){
   
@@ -20,15 +21,21 @@ cpm.test <- function(data, type){
   
   index <- which(tolower(types) == tolower(type))
   
-  p <- NULL
-  tryCatch(p <- detectChangePoint(data, cpmType=types[index]),
-      error=function(e){return(NA)})
+  lag <- filter(data, c(0,1), method="conv", sides=1)
   
-  if(!is.null(p) && !is.na(p)){
-    if(p$changeDetected){
-      return(NONSTATIONARY)
-    } else {
-      return(STATIONARY)
+  model <- try(lm(data ~ -1 + lag))
+  
+  if(class(model) != "try-error"){
+    p <- NULL
+    tryCatch(p <- detectChangePoint(model$residuals, cpmType=types[index]),
+        error=function(e){return(NA)})
+    
+    if(!is.null(p) && !is.na(p)){
+      if(p$changeDetected){
+        return(NONSTATIONARY)
+      } else {
+        return(STATIONARY)
+      }
     }
   }
   return(NA)
