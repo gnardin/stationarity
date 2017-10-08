@@ -13,7 +13,11 @@ algo.test(data, alpha, mode, window)
 
 \item{mode}{1: ERS, 2: SP}
 
+<<<<<<< HEAD
 \item{window}{Structural change window size (0 - 100)}
+=======
+\item{window}{Structural change window size}
+>>>>>>> 1980ca786f9bc64960213752d59f98e3bafdc768
 }
 \value{
 ERS|SP, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,

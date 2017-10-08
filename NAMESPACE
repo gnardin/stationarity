@@ -15,7 +15,10 @@ export("ts.stationary.normal")
 export("ts.trend.autocorrelation")
 export("ts.trend.mean")
 export("ts.trend.variance")
+<<<<<<< HEAD
 import(wavethresh)
+=======
+>>>>>>> 1980ca786f9bc64960213752d59f98e3bafdc768
 importFrom(BootWPTOS,BootWPTOS)
 importFrom(FinTS,ArchTest)
 importFrom(changepoint,cpt.mean)

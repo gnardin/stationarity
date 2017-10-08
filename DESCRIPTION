@@ -1,6 +1,10 @@
 Package: stationarity
 Type: Package
+<<<<<<< HEAD
 Date: 2017-10-08
+=======
+Date: 2017-02-02
+>>>>>>> 1980ca786f9bc64960213752d59f98e3bafdc768
 Title: Time Series Stationarity Test
 Version: 0.1.0
 Author: Luis G. Nardin [aut, cre],
@@ -9,8 +13,13 @@ Maintainer: Luis G. Nardin <gnardin@gmail.com>
 URL: https://github.com/gnardin/stationarity
 BugReports: https://github.com/gnardin/stationarity/issues
 Description: Generates stationary and non-stationary time series and tests stationarity.
+<<<<<<< HEAD
 Depends: R (>= 3.3.2), costat
 Imports: urca, tseries, fractal, costat, locits, changepoint, timeSeries, FinTS, lmtest, strucchange, cpm, BootWPTOS, wavethresh
+=======
+Depends: R (>= 3.1.0)
+Imports: urca, tseries, fUnitRoots, fractal, locits, costat, changepoint, timeSeries, FinTS, lmtest, strucchange, cpm, BootWPTOS
+>>>>>>> 1980ca786f9bc64960213752d59f98e3bafdc768
 License: LGPL (>= 3)
 LazyData: TRUE
 Encoding: UTF-8

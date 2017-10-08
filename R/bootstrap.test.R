@@ -1,7 +1,7 @@
-#' @title Bootstrap Stationarity Test
+#' @title Bootstrap Wavelet Packet Tests
 #'
 #' @description
-#' Bootstrap stationarity test.
+#' Bootstrap wavelet packet tests.
 #' 
 #' @param data Time series data
 #' @param alpha Value of alpha for the statistics test
@@ -17,7 +17,7 @@ bootstrap.test <- function(data, alpha){
   if((num %% as.integer(num)) == 0){
     p <- NULL
     
-    tryCatch(p <- BootTOS(data)$p.value,
+    tryCatch(p <- BootWPTOS(data, levs=1, indices=1)$p.value,
         error=function(e){return(NA)})
     
     if(!is.null(p) && !is.na(p)){
