@@ -4,14 +4,14 @@
 \alias{ts.data.generator}
 \title{Time Series Data Generator}
 \usage{
-ts.data.generator(TS, y0, delta, tau, phi, theta, mu, sigma, omega)
+ts.data.generator(TS, y0, delta, tau, phi, theta, mu, sigma, omega, burnin)
 }
 \arguments{
 \item{TS}{Size of the time series}
 
 \item{y0}{Y[0] value}
 
-\item{delta}{Mean}
+\item{delta}{Drift constant}
 
 \item{tau}{Trend on the mean}
 
@@ -24,6 +24,8 @@ ts.data.generator(TS, y0, delta, tau, phi, theta, mu, sigma, omega)
 \item{sigma}{Normal error standard deviation}
 
 \item{omega}{Trend on the variance}
+
+\item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }
 \value{
 Time series of size N
@@ -33,7 +35,7 @@ Generates stationary or non-stationary time series data with mean or
 variance trend and normal error distribution.
 }
 \examples{
-ts.data.generator(100, 0, 0, 0, 1, 0, 0, 1, 0)
+x <- 100
+ts.data.generator(x, 0, 0, 0, 1, 0, 0, 1, 0, 10)
 
 }
-

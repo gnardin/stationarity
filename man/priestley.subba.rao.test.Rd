@@ -17,4 +17,3 @@ priestley.subba.rao.test(data, alpha)
 \description{
 Priestley-Subba Rao stationarity test.
 }
-

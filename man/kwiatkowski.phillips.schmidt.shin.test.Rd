@@ -17,4 +17,3 @@ kwiatkowski.phillips.schmidt.shin.test(data, alpha)
 \description{
 Kwiatkowski–Phillips–Schmidt–Shin stationarity test.
 }
-

@@ -19,11 +19,13 @@ breusch.pagan.test <- function(data, alpha){
   tryCatch(p <- bgtest(data ~ 1 + lag, order=1, type="F", fill=NA),
       error=function(e){return(NA)})
   
-  if(!is.na(p) && !is.null(p)){
-    if(p$p.value <= alpha){
-      return(NONSTATIONARY)
-    } else {
-      return(STATIONARY)
+  if(!is.null(p)){
+    if(!is.null(p$p.value) && !is.na(p$p.value)){
+      if(p$p.value <= alpha){
+        return(NONSTATIONARY)
+      } else {
+        return(STATIONARY)
+      }
     }
   }
   return(NA)

@@ -4,7 +4,7 @@
 \alias{ts.trend.autocorrelation}
 \title{Time Series Data Generator with Autocorrelation Trend}
 \usage{
-ts.trend.autocorrelation(N, TS, delta, phis, thetas, mu, sigma, seeds)
+ts.trend.autocorrelation(N, TS, delta, phis, thetas, mu, sigma, seeds, burnin)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -22,6 +22,8 @@ ts.trend.autocorrelation(N, TS, delta, phis, thetas, mu, sigma, seeds)
 \item{sigma}{Normal error standard deviation}
 
 \item{seeds}{Vector of the seeds}
+
+\item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }
 \value{
 N time series of size TS
@@ -31,7 +33,6 @@ Generates non-stationary time series data with autocorrelation trend and
 normal error distribution.
 }
 \examples{
-ts.trend.autocorrelation(5, 5000, 0, c(-0.9, 0.9), c(0, 0), 0, 1, c(645,983,653,873,432))
+ts.trend.autocorrelation(5, 5000, 0, c(-0.9, 0.9), c(0, 0), 0, 1, c(645,983,653,873,432), 10)
 
 }
-

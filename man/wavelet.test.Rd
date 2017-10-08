@@ -17,4 +17,3 @@ wavelet.test(data, alpha)
 \description{
 Wavelet stationarity test.
 }
-

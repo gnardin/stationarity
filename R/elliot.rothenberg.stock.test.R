@@ -8,16 +8,16 @@
 #' 
 #' @return 0: Non-Stationary, 1: Stationary, NA: Unable to test
 #' 
-#' @importFrom fUnitRoots urersTest
+#' @importFrom urca ur.ers
 #' 
 elliot.rothenberg.stock.test <- function(data, alpha){
   p <- NULL
-  tryCatch(p <- urersTest(data, type="DF-GLS", model="constant", doplot=FALSE),
+  tryCatch(p <- ur.ers(data, type="DF-GLS", model="constant"),
       error=function(e){return(NA)})
   
-  if(!is.na(p) && !is.null(p)){
-    if(!is.na(p@test$test@teststat)){
-      if(p@test$test@teststat <= p@test$test@cval[2]){
+  if(!is.null(p)){
+    if(!is.null(p@teststat) && !is.na(p@teststat)){
+      if(p@teststat <= p@cval[2]){
         return(STATIONARY)
       } else {
         return(NONSTATIONARY)

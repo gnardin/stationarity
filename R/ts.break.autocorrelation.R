@@ -12,29 +12,19 @@
 #' @param mu Normal error mean
 #' @param sigma Normal error standard deviation
 #' @param seeds Vector of the seeds
+#' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
 #' 
 #' @examples
-#' ts.break.autocorrelation(5, 5000, 0, c(0.45, 0.9), c(0, 0), 0, 1, c(645,983,653,873,432))
+#' ts.break.autocorrelation(5, 5000, 0, c(0.45, 0.9), c(0, 0), 0, 1, c(645,983,653,873,432), 10)
 #' 
 #' @export "ts.break.autocorrelation"
 #' 
-ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, mu, sigma, seeds){
+ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, mu, sigma, seeds, burnin){
   
-  if(is.null(seeds)){
-    stop("The seeds vector cannot be NULL.")
-  } else if(N <= 0){
-    stop("N must be greater than 0.")
-  } else if(TS <= 0){
-    stop("TS must be greater than 0.")
-  } else if(N > length(seeds)){
-    stop("The seeds vector size must be greater than or equal to N.")
-  } else if(length(phis) != 2){
-    stop("The phis must be a vector with 2 elements.")
-  } else if(length(thetas) != 2){
-    stop("The thetas must be a vector with 2 elements.")
-  }
+  stopifnot(!is.null(seeds), N > 0, TS > 1, N <= length(seeds),
+      length(phis) == 2, length(thetas) == 2)
   
   fHalf <- as.integer(TS / 2)
   sHalf <- TS - fHalf
@@ -44,10 +34,10 @@ ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, mu, sigma, seeds
     set.seed(seeds[i])
     
     ts1 <- ts.data.generator(fHalf, 0, delta, 0,
-        phis[1], thetas[1], mu, sigma, 0)
+        phis[1], thetas[1], mu, sigma, 0, burnin)
     
     ts2 <- ts.data.generator(sHalf, ts1[length(ts1)], delta, 0,
-        phis[2], thetas[2], mu, sigma, 0)
+        phis[2], thetas[2], mu, sigma, 0, 0)
     
     ts[,i] <- c(ts1, ts2)
   }

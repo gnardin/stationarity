@@ -19,4 +19,3 @@ cpm.test(data, type)
 \description{
 Change Point changes stationarity test.
 }
-

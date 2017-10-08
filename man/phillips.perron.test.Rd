@@ -17,4 +17,3 @@ phillips.perron.test(data, alpha)
 \description{
 Phillips-Perron stationarity test.
 }
-

@@ -7,7 +7,8 @@
 #' @param data Time series data
 #' @param alpha Value of alpha for the statistics test
 #' 
-#' @return 0 - Non-Stationary, 1 - Stationary, or NA - Unable to perform the test
+#' @return 0: Non-Stationary, 1: Stationary, 2: Stationary around non-zero mean,
+#' 3: Stationary around trend, NA: Unable to perform the test
 #' 
 #' @export "run.test"
 #' 
@@ -37,6 +38,8 @@ run.test <- function(test, data, alpha){
     result <- wavelet.test(data, alpha)
   } else if(testName == "bootstrap"){
     result <- bootstrap.test(data, alpha)
+  } else if(testName == "bootwptos"){
+    result <- bootwptos.test(data, alpha)
   } else if(substr(testName, 1, 4) == "cptm"){
     method <- NULL
     tryCatch(method <- substr(test, 6, nchar(test)))
@@ -68,11 +71,13 @@ run.test <- function(test, data, alpha){
     
     result <- structure.change.test(data, alpha, type, window)
   } else if(substr(testName, 1, 3) == "cpm"){
-      type <- NULL
-      tryCatch(type <- substr(test, 5, nchar(test)))
-      
-      result <- cpm.test(data, type)
-    }
-  
+    type <- NULL
+    tryCatch(type <- substr(test, 5, nchar(test)))
+    
+    result <- cpm.test(data, type)
+  } else if(testName == "enders"){
+    result <- enders.test(data, alpha)
+  }
+    
   return(result)
 }

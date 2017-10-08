@@ -17,4 +17,3 @@ schmidt.phillips.test(data, alpha)
 \description{
 Schmidt-Phillips stationarity test.
 }
-

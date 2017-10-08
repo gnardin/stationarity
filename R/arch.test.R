@@ -20,11 +20,13 @@ arch.test <- function(data, alpha){
     tryCatch(p <- ArchTest(model$residuals, lags=1, demean=FALSE),
         error=function(e){return(NA)})
     
-    if(!is.na(p) && !is.null(p)){
-      if(p$p.value <= alpha){
-        return(NONSTATIONARY)
-      } else {
-        return(STATIONARY)
+    if(!is.null(p)){
+      if(!is.null(p$p.value) && !is.na(p$p.value)){
+        if(p$p.value <= alpha){
+          return(NONSTATIONARY)
+        } else {
+          return(STATIONARY)
+        }
       }
     }
   }

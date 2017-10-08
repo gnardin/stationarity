@@ -14,9 +14,9 @@ run.test(test, data, alpha)
 \item{alpha}{Value of alpha for the statistics test}
 }
 \value{
-0 - Non-Stationary, 1 - Stationary, or NA - Unable to perform the test
+0: Non-Stationary, 1: Stationary, 2: Stationary around non-zero mean,
+3: Stationary around trend, NA: Unable to perform the test
 }
 \description{
 Performs a time series stationarity test.
 }
-

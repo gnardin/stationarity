@@ -17,4 +17,3 @@ dickey.fuller.test(data, alpha)
 \description{
 Dickey-Fuller stationarity test.
 }
-

@@ -4,12 +4,14 @@
 \alias{ts.stationary.normal}
 \title{Time Series Data Generator with Normal Error Distribution}
 \usage{
-ts.stationary.normal(N, TS, phi, theta, mu, sigma, seeds)
+ts.stationary.normal(N, TS, delta, phi, theta, mu, sigma, seeds, burnin)
 }
 \arguments{
 \item{N}{Number of time series}
 
 \item{TS}{Size of the time series}
+
+\item{delta}{Drift constant}
 
 \item{phi}{Vector of autoregressive parameters}
 
@@ -20,6 +22,8 @@ ts.stationary.normal(N, TS, phi, theta, mu, sigma, seeds)
 \item{sigma}{Normal error standard deviation}
 
 \item{seeds}{Vector of the seeds}
+
+\item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }
 \value{
 N time series of size TS
@@ -28,7 +32,6 @@ N time series of size TS
 Generates non-stationary time series data with normal error distribution.
 }
 \examples{
-ts.stationary.normal(5, 5000, 0.9, 0, 0, 1, c(645,983,653,873,432))
+ts.stationary.normal(5, 5000, 1, 0.9, 0, 0, 1, c(645,983,653,873,432), 10)
 
 }
-

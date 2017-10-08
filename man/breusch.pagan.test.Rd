@@ -17,4 +17,3 @@ breusch.pagan.test(data, alpha)
 \description{
 Breusch-Pagan stationarity test.
 }
-

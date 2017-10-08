@@ -4,7 +4,7 @@
 \alias{ts.trend.mean}
 \title{Time Series Data Generator with Mean Trend}
 \usage{
-ts.trend.mean(N, TS, delta, tau, phi, theta, mu, sigma, seeds)
+ts.trend.mean(N, TS, delta, tau, phi, theta, mu, sigma, seeds, burnin)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -24,6 +24,8 @@ ts.trend.mean(N, TS, delta, tau, phi, theta, mu, sigma, seeds)
 \item{sigma}{Normal error standard deviation}
 
 \item{seeds}{Vector of the seeds}
+
+\item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }
 \value{
 N time series of size TS
@@ -33,7 +35,6 @@ Generates non-stationary time series data with mean trend and
 normal error distribution.
 }
 \examples{
-ts.trend.mean(5, 5000, 0, 1, 0.9, 0, 0, 1, c(645,983,653,873,432))
+ts.trend.mean(5, 5000, 0, 1, 0.9, 0, 0, 1, c(645,983,653,873,432), 10)
 
 }
-

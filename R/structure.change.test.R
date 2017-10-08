@@ -16,7 +16,7 @@
 #' 
 structure.change.test <- function(data, alpha, type, window){
   
-  if((is.null(window)) | (length(window) == 0)){
+  if((is.null(window)) || is.na(window) || (length(window) == 0)){
     window <- 0.01
   } else {
     if(window < 0){
@@ -38,10 +38,13 @@ structure.change.test <- function(data, alpha, type, window){
   }
   
   if(class(p) != "try-error"){
-    if(sctest(p)$p.value <= alpha){
-      return(NONSTATIONARY)
-    } else {
-      return(STATIONARY)
+    scValue <- sctest(p)$p.value
+    if(!is.na(scValue)){
+      if(scValue <= alpha){
+        return(NONSTATIONARY)
+      } else {
+        return(STATIONARY)
+      }
     }
   }
   return(NA)

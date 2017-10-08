@@ -21,4 +21,3 @@ changepoint.variance.test(data, alpha, penalty, method)
 \description{
 Change Point variance changes stationarity test.
 }
-

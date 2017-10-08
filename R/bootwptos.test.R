@@ -1,23 +1,22 @@
-#' @title Bootstrap Stationarity Test
+#' @title Bootstrap Wavelet Packet Tests
 #'
 #' @description
-#' Bootstrap stationarity test.
+#' Bootstrap wavelet packet tests.
 #' 
 #' @param data Time series data
 #' @param alpha Value of alpha for the statistics test
 #' 
 #' @return 0: Non-Stationary, 1: Stationary, NA: Unable to test
 #' 
-#' @import wavethresh
-#' @importFrom costat BootTOS
+#' @importFrom BootWPTOS BootWPTOS
 #' 
-bootstrap.test <- function(data, alpha){
+bootwptos.test <- function(data, alpha){
   
   num <- log2(length(data))
   if((num %% as.integer(num)) == 0){
     p <- NULL
     
-    tryCatch(p <- BootTOS(data)$p.value,
+    tryCatch(p <- BootWPTOS(data, levs=1, indices=1)$p.value,
         error=function(e){return(NA)})
     
     if(!is.null(p) && !is.na(p)){

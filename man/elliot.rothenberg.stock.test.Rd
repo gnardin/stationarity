@@ -17,4 +17,3 @@ elliot.rothenberg.stock.test(data, alpha)
 \description{
 Elliot-Rothenberg-Stock stationarity test.
 }
-

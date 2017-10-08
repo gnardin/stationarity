@@ -17,4 +17,3 @@ zivot.andrews.test(data, alpha)
 \description{
 Zivot-Andrews stationarity test.
 }
-

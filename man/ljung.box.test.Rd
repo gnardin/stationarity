@@ -17,4 +17,3 @@ ljung.box.test(data, alpha)
 \description{
 Ljung-Box stationarity test.
 }
-

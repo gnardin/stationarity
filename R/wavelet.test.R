@@ -11,18 +11,20 @@
 #' @importFrom locits hwtos2
 #' 
 wavelet.test <- function(data, alpha){
+  
   num <- log2(length(data))
   if((num %% as.integer(num)) == 0){
-    
     p <- NULL
     tryCatch(p <- hwtos2(data, alpha=alpha),
         error=function(e){return(NA)})
     
-    if(!is.na(p) && !is.null(p)){
-      if(p$nreject < 1){
-        return(STATIONARY)
-      } else {
-        return(NONSTATIONARY)
+    if(!is.null(p)){
+      if(!is.null(p$nreject) && !is.na(p$nreject)){
+        if(p$nreject < 1){
+          return(STATIONARY)
+        } else {
+          return(NONSTATIONARY)
+        }
       }
     }
   }

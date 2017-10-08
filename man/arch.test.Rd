@@ -17,4 +17,3 @@ arch.test(data, alpha)
 \description{
 Arch Test stationarity test.
 }
-

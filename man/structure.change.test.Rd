@@ -21,4 +21,3 @@ structure.change.test(data, alpha, type, window)
 \description{
 Strcuture Change stationarity test.
 }
-

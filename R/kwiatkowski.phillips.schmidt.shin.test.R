@@ -15,7 +15,7 @@ kwiatkowski.phillips.schmidt.shin.test <- function(data, alpha){
   tryCatch(p <- kpss.test(data)$p.value,
       error=function(e){return(NA)})
   
-  if(!is.na(p) && !is.null(p)){
+  if(!is.null(p) & !is.na(p)){
     if(p <= alpha){
       return(NONSTATIONARY)
     } else {

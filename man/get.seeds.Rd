@@ -22,4 +22,3 @@ and no column header.
 get.seeds(1000)
 
 }
-

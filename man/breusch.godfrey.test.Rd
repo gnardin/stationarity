@@ -17,4 +17,3 @@ breusch.godfrey.test(data, alpha)
 \description{
 Breusch-Godfrey stationarity test.
 }
-

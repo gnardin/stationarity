@@ -21,4 +21,3 @@ changepoint.mean.test(data, alpha, penalty, method)
 \description{
 Change Point mean changes stationarity test.
 }
-
