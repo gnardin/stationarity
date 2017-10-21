@@ -21,7 +21,3 @@ Uses interpolation to calculate the t.critical
 Uses maximum sample size of 1000 to calculate the linear interpolation
 in the case sample size greater than 500
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 1980ca786f9bc64960213752d59f98e3bafdc768

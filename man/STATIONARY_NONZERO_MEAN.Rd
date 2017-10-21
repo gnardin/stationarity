@@ -12,7 +12,3 @@ STATIONARY_NONZERO_MEAN
 Stationary around non-zero mean
 }
 \keyword{datasets}
-<<<<<<< HEAD
-=======
-
->>>>>>> 1980ca786f9bc64960213752d59f98e3bafdc768

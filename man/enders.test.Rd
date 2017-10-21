@@ -18,7 +18,3 @@ enders.test(data, alpha)
 \description{
 Procedure to test for unit roots.
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 1980ca786f9bc64960213752d59f98e3bafdc768

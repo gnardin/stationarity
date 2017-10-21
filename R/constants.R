@@ -3,6 +3,7 @@
 #' @description Non-Stationary constant
 #' 
 #' @export "NONSTATIONARY"
+#' 
 NONSTATIONARY <- 0
 
 #' @title Stationary constant
