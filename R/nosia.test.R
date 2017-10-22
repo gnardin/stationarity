@@ -5,34 +5,20 @@
 #' 
 #' @param data Time series data
 #' @param alpha Value of alpha for the statistics test
-#' @param mode 1: ERS, 2: SP
-#' @param window Structural change window size (0 - 100)
+#' @param window Structural change window size proportion (0 - 1)
 #' 
-#' @return ERS|SP, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,
+#' @return ERS, BG, AT, SC, Total results (0: Non-Stationary, 1: Stationary,
 #' NA: Not used test)
 #' 
-#' @export "algo.test"
+#' @export "nosia.test"
 #' 
-algo.test <- function(data, alpha, mode, window){
+nosia.test <- function(data, alpha, window){
   
   result <- rep(NA, 5)
   
-  # ERS | SP tests Positive Unit-Root
-  #                Trend Mean
-  #                Break of large time series
-  finish <- FALSE
-  test <- NA
-  if(mode == 1){
-    test <- elliot.rothenberg.stock.test(data, alpha)
-    
-    if(is.na(test)){
-      finish <- TRUE
-    }
-  } else if(mode == 2){
-    test <- schmidt.phillips.test(data, alpha)
-  }
+  test <- elliot.rothenberg.stock.test(data, alpha)
   
-  if(!finish){
+  if(!is.na(test)){
     if((!is.na(test)) & (test == NONSTATIONARY)){
       result[1] <- NONSTATIONARY
       result[5] <- NONSTATIONARY
@@ -62,12 +48,10 @@ algo.test <- function(data, alpha, mode, window){
               
               ## Adjust Structure Change test percentage size
               # SC test Break Mean
-              if(window > 100){
+              if(window > 1){
                 window <- 1
               } else if(window < 0){
                 window <- 0
-              } else {
-                window <- window / 100
               }
               
               sc <- structure.change.test(data, alpha, "ME", window)

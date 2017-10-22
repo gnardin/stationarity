@@ -77,6 +77,15 @@ run.test <- function(test, data, alpha){
     result <- cpm.test(data, type)
   } else if(testName == "enders"){
     result <- enders.test(data, alpha)
+  } else if(testName == "cdw"){
+    result <- cdw.test(data, alpha)
+  } else if(substr(testName, 1, 5) == "wwrun"){
+    
+    terms <- unlist(strsplit(test, "-"))
+    
+    tryCatch(window <- as.double(terms[2]))
+    
+    result <- wwrun.test(data, alpha, window)
   }
     
   return(result)
