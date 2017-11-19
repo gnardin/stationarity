@@ -9,19 +9,21 @@
 #' @param deltas Vector with two mean values
 #' @param phi Vector of autoregressive parameters
 #' @param theta Vector of moving average parameters
-#' @param mu Normal error mean
-#' @param sigma Normal error standard deviation
+#' @param error Type of error and parameters
+#'        Normal      - c(ERROR_N, mean, stdv)
+#'        Exponential - c(ERROR_E, mean, lambda)
+#'        Triangle    - c(ERROR_T, lower, upper, mode)
 #' @param seeds Vector of the seeds
 #' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
 #' 
 #' @examples
-#' ts.break.mean(5, 5000, c(0, 2), 0.9, 0, 0, 1, c(645,983,653,873,432), 10)
+#' ts.break.mean(5, 5000, c(0, 2), 0.9, 0, c(ERROR_N, 0, 1), c(645,983,653,873,432), 10)
 #' 
 #' @export "ts.break.mean"
 #' 
-ts.break.mean <- function(N, TS, deltas, phi, theta, mu, sigma, seeds, burnin){
+ts.break.mean <- function(N, TS, deltas, phi, theta, error, seeds, burnin){
   
   stopifnot(!is.null(seeds), N > 0, TS > 1, N <= length(seeds),
       length(deltas) == 2)
@@ -34,10 +36,10 @@ ts.break.mean <- function(N, TS, deltas, phi, theta, mu, sigma, seeds, burnin){
     set.seed(seeds[i])
     
     ts1 <- ts.data.generator(firstHalf, 0, deltas[1], 0,
-        phi, theta, mu, sigma, 0, burnin)
+        phi, theta, error, 0, burnin)
     
     ts2 <- ts.data.generator(secondHalf, ts1[length(ts1)], deltas[2], 0,
-        phi, theta, mu, sigma, 0, 0)
+        phi, theta, error, 0, 0)
     
     ts[,i] <- c(ts1, ts2)
   }

@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Generates stationary or non-stationary time series data with mean or
-#' variance trend and normal error distribution.
+#' variance trend and different error distributions.
 #' 
 #' @param TS Size of the time series
 #' @param y0 Y[0] value
@@ -10,8 +10,10 @@
 #' @param tau Trend on the mean
 #' @param phi Matrix of autoregressive parameters over time
 #' @param theta Matrix of moving average parameters over time
-#' @param mu Normal error mean
-#' @param sigma Normal error standard deviation
+#' @param error Type of error and parameters
+#'        Normal      - c(ERROR_N, mean, stdv)
+#'        Exponential - c(ERROR_E, mean, lambda)
+#'        Triangle    - c(ERROR_T, lower, upper, mode)
 #' @param omega Trend on the variance
 #' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
@@ -19,15 +21,36 @@
 #' 
 #' @examples
 #' x <- 100
-#' ts.data.generator(x, 0, 0, 0, 1, 0, 0, 1, 0, 10)
+#' ts.data.generator(x, 0, 0, 0, 1, 0, c(ERROR_N,0,1), 0, 10)
 #' 
 #' @importFrom stats rnorm
+#' @importFrom smoothmest rdoublex
+#' @importFrom triangle rtriangle
 #' 
 #' @export "ts.data.generator"
 #' 
-ts.data.generator <- function(TS, y0, delta, tau, phi, theta, mu, sigma, omega, burnin){
+ts.data.generator <- function(TS, y0, delta, tau, phi, theta, error, omega, burnin){
   
-  stopifnot(TS > 1)
+  stopifnot(TS > 1, error[1] %in% c(ERROR_N, ERROR_E, ERROR_T))
+  
+  terror <- error[1]
+  ## NORMAL error
+  if(terror == ERROR_N){
+    stopifnot(length(error) >= 3)
+    mu <- error[2]
+    sigma <- error[3]
+  ## EXPONENTIAL error
+  } else if(terror == ERROR_E){
+    stopifnot(length(error) >= 3)
+    mu <- error[2]
+    lambda <- error[3]
+  ## TRIANGLE error
+  } else if(terror == ERROR_T){
+    stopifnot(length(error) >= 4)
+    lower <- error[2]
+    upper <- error[3]
+    mode <- error[4]
+  }
   
   ## Number of autoregressive elements
   if(!is.matrix(phi)){
@@ -55,7 +78,13 @@ ts.data.generator <- function(TS, y0, delta, tau, phi, theta, mu, sigma, omega, 
     epsilon <- vector()
     
     ## Error
-    epsilon[1] <- rnorm(1, mu, sigma)
+    if(terror == ERROR_N){
+      epsilon[1] <- rnorm(1, mu, sigma)
+    } else if(terror == ERROR_E){
+      epsilon[1] <- rdoublex(1, mu, lambda)
+    } else if(terror == ERROR_T){
+      epsilon[1] <- rtriangle(1, lower, upper, mode)
+    }
     
     ## Dependent variable
     alpha <- tau / TS
@@ -64,7 +93,13 @@ ts.data.generator <- function(TS, y0, delta, tau, phi, theta, mu, sigma, omega, 
     for(t in 2:burnin){
       
       ## Error
-      epsilon[t] <- rnorm(1, mu, sigma)
+      if(terror == ERROR_N){
+        epsilon[t] <- rnorm(1, mu, sigma)
+      } else if(terror == ERROR_E){
+        epsilon[t] <- rdoublex(1, mu, lambda)
+      } else if(terror == ERROR_T){
+        epsilon[t] <- rtriangle(1, lower, upper, mode)
+      }
       
       ## Dependent variable
       Y[t] <- delta + (alpha * t) + epsilon[t]
@@ -93,7 +128,16 @@ ts.data.generator <- function(TS, y0, delta, tau, phi, theta, mu, sigma, omega, 
   epsilon <- vector()
   
   ## Error
-  epsilon[1] <- rnorm(1, mu, (sigma + (omega / TS)))
+  if(terror == ERROR_N){
+    epsilon[1] <- rnorm(1, mu, (sigma + (omega / TS)))
+  } else if(terror == ERROR_E){
+    epsilon[1] <- rdoublex(1, mu, (lambda + (omega / TS)))
+  } else if(terror == ERROR_T){
+    epsilon[1] <- rtriangle(1, lower, upper, (mode + (omega / TS)))
+  }
+  
+  ## Error
+  
   
   ## Dependent variable
   alpha <- tau / TS
@@ -102,7 +146,13 @@ ts.data.generator <- function(TS, y0, delta, tau, phi, theta, mu, sigma, omega, 
   for(t in 2:TS){
     
     ## Error
-    epsilon[t] <- rnorm(1, mu, (sigma + ((omega * t) / TS)))
+    if(terror == ERROR_N){
+      epsilon[t] <- rnorm(1, mu, (sigma + ((omega * t) / TS)))
+    } else if(terror == ERROR_E){
+      epsilon[t] <- rdoublex(1, mu, (lambda + ((omega * t) / TS)))
+    } else if(terror == ERROR_T){
+      epsilon[t] <- rtriangle(1, lower, upper, (mode + ((omega * t) / TS)))
+    }
     
     ## Dependent variable
     Y[t] <- delta + (alpha * (t + burnin)) + epsilon[t]

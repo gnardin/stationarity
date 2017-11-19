@@ -9,21 +9,42 @@
 #' @param delta Mean
 #' @param phi Vector of autoregressive parameters
 #' @param theta Vector of moving average parameters
-#' @param mu Normal error mean
-#' @param sigmas Vector with two error standard deviation values
+#' @param error Type of error and parameters
+#'        Normal      - c(ERROR_N, mean, stdv[1], stdv[2])
+#'        Exponential - c(ERROR_E, mean, lambda[1], lambda[2])
+#'        Triangle    - c(ERROR_T, lower, upper, mode[1], mode[2])
 #' @param seeds Vector of the seeds
 #' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
 #' 
 #' @examples
-#' ts.break.variance(5, 5000, 0, 0.9, 0, 0, c(1, 2), c(645,983,653,873,432), 10)
+#' ts.break.variance(5, 5000, 0, 0.9, 0, c(ERROR_N, 0, 1, 2), c(645,983,653,873,432), 10)
 #' 
 #' @export "ts.break.variance"
 #' 
-ts.break.variance <- function(N, TS, delta, phi, theta, mu, sigmas, seeds, burnin){
+ts.break.variance <- function(N, TS, delta, phi, theta, error, seeds, burnin){
   
   stopifnot(!is.null(seeds), N > 0, TS > 1, N <= length(seeds))
+  
+  errors <- list()
+  terror <- error[1]
+  ## NORMAL error
+  if(terror == ERROR_N){
+    stopifnot(length(error) >= 4)
+    errors[[1]] <- c(error[1], error[2], error[3])
+    errors[[2]] <- c(error[1], error[2], error[4])
+    ## EXPONENTIAL error
+  } else if(terror == ERROR_E){
+    stopifnot(length(error) >= 4)
+    errors[[1]] <- c(error[1], error[2], error[3])
+    errors[[2]] <- c(error[1], error[2], error[4])
+    ## TRIANGLE error
+  } else if(terror == ERROR_T){
+    stopifnot(length(error) >= 5)
+    errors[[1]] <- c(error[1], error[2], error[3], error[4])
+    errors[[2]] <- c(error[1], error[2], error[3], error[5])
+  }
   
   firstHalf <- as.integer(TS / 2)
   secondHalf <- TS - firstHalf
@@ -33,10 +54,10 @@ ts.break.variance <- function(N, TS, delta, phi, theta, mu, sigmas, seeds, burni
     set.seed(seeds[i])
     
     ts1 <- ts.data.generator(firstHalf, 0, delta, 0,
-        phi, theta, mu, sigmas[1], 0, burnin)
+        phi, theta, errors[[1]], 0, burnin)
     
     ts2 <- ts.data.generator(secondHalf, ts1[length(ts1)], delta, 0,
-        phi, theta, mu, sigmas[2], 0, 0)
+        phi, theta, errors[[2]], 0, 0)
         
     ts[,i] <- c(ts1, ts2)
   }

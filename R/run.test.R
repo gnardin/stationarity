@@ -86,7 +86,9 @@ run.test <- function(test, data, alpha){
     tryCatch(window <- as.double(terms[2]))
     
     result <- wwrun.test(data, alpha, window)
+  } else if(testName == "k+s"){
+    result <- kolmogorov.smirnov.test(data, alpha)
   }
-    
+  
   return(result)
 }

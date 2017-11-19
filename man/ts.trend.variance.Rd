@@ -4,7 +4,7 @@
 \alias{ts.trend.variance}
 \title{Time Series Data Generator with Variance Trend}
 \usage{
-ts.trend.variance(N, TS, delta, phi, theta, mu, sigma, omega, seeds, burnin)
+ts.trend.variance(N, TS, delta, phi, theta, error, omega, seeds, burnin)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -17,9 +17,10 @@ ts.trend.variance(N, TS, delta, phi, theta, mu, sigma, omega, seeds, burnin)
 
 \item{theta}{Vector of moving average parameters}
 
-\item{mu}{Normal error mean}
-
-\item{sigma}{Normal error standard deviation}
+\item{error}{Type of error and parameters
+Normal      - c(ERROR_N, mean, stdv)
+Exponential - c(ERROR_E, mean, lambda)
+Triangle    - c(ERROR_T, lower, upper, mode)}
 
 \item{omega}{Trend on the variance}
 
@@ -35,6 +36,6 @@ Generates non-stationary time series data with variance trend and
 normal error distribution.
 }
 \examples{
-ts.trend.variance(5, 5000, 0, 0.9, 0, 0, 1, 2, c(645,983,653,873,432), 10)
+ts.trend.variance(5, 5000, 0, 0.9, 0, c(ERROR_N, 0, 1), 2, c(645,983,653,873,432), 10)
 
 }

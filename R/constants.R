@@ -29,3 +29,27 @@ STATIONARY_NONZERO_MEAN <- 2
 #' @export "STATIONARY_TREND"
 #' 
 STATIONARY_TREND <- 3
+
+#' @title Normal error
+#' 
+#' @description Normal error
+#' 
+#' @export "ERROR_N"
+#' 
+ERROR_N <- 0
+
+#' @title Double Exponential error
+#' 
+#' @description Double Exponential error
+#' 
+#' @export "ERROR_E"
+#' 
+ERROR_E <- 1
+
+#' @title Triangle error
+#' 
+#' @description Triangle error
+#' 
+#' @export "ERROR_T"
+#' 
+ERROR_T <- 2

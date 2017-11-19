@@ -4,7 +4,7 @@
 \alias{ts.break.autocorrelation}
 \title{Time Series Data Generator with Break in the Autocorrelation}
 \usage{
-ts.break.autocorrelation(N, TS, delta, phis, thetas, mu, sigma, seeds, burnin)
+ts.break.autocorrelation(N, TS, delta, phis, thetas, error, seeds, burnin)
 }
 \arguments{
 \item{N}{Number of time series}
@@ -17,9 +17,10 @@ ts.break.autocorrelation(N, TS, delta, phis, thetas, mu, sigma, seeds, burnin)
 
 \item{thetas}{Vector with two moving average values}
 
-\item{mu}{Normal error mean}
-
-\item{sigma}{Normal error standard deviation}
+\item{error}{Type of error and parameters
+Normal      - c(ERROR_N, mean, stdv)
+Exponential - c(ERROR_E, mean, lambda)
+Triangle    - c(ERROR_T, lower, upper, mode)}
 
 \item{seeds}{Vector of the seeds}
 
@@ -33,6 +34,7 @@ Generates non-stationary time series data with break in the autocorrelation
 and normal error distribution.
 }
 \examples{
-ts.break.autocorrelation(5, 5000, 0, c(0.45, 0.9), c(0, 0), 0, 1, c(645,983,653,873,432), 10)
+ts.break.autocorrelation(5, 5000, 0, c(0.45, 0.9), c(0, 0), c(ERROR_N, 0, 1),
+c(645,983,653,873,432), 10)
 
 }

@@ -18,7 +18,7 @@ wwrun.test <- function(data, alpha, window) {
   
   tsLen <- length(data)
   if (tsLen >= (2 * window)) {
-    sequence <- seq(1, tsLen, window)
+    sequence <- seq(1, (tsLen - (tsLen %% window)), window)
     for(i in 1:length(sequence)) {
       rr[[i]] <- data[seq(sequence[i], sequence[i] + window - 1)]
     }
