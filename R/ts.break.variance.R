@@ -7,13 +7,13 @@
 #' @param N Number of time series
 #' @param TS Size of the time series
 #' @param delta Mean
-#' @param phi Vector of autoregressive parameters
-#' @param theta Vector of moving average parameters
+#' @param phi Autoregressive parameter
+#' @param theta Moving average parameter
 #' @param error Type of error and parameters
 #'        Normal      - c(ERROR_N, mean, stdv[1], stdv[2])
 #'        Exponential - c(ERROR_E, mean, lambda[1], lambda[2])
 #'        Triangle    - c(ERROR_T, lower, upper, mode[1], mode[2])
-#' @param seeds Vector of the seeds
+#' @param seeds Vector of seeds
 #' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
@@ -43,7 +43,8 @@ ts.break.variance <- function(N, TS, delta, phi, theta, error, seeds, burnin){
   } else if(terror == ERROR_T){
     stopifnot(length(error) >= 5)
     errors[[1]] <- c(error[1], error[2], error[3], error[4])
-    errors[[2]] <- c(error[1], error[2], error[3], error[5])
+    errors[[2]] <- c(error[1], error[2] - error[5],
+        error[3] + error[5], error[5])
   }
   
   firstHalf <- as.integer(TS / 2)
@@ -54,10 +55,10 @@ ts.break.variance <- function(N, TS, delta, phi, theta, error, seeds, burnin){
     set.seed(seeds[i])
     
     ts1 <- ts.data.generator(firstHalf, 0, delta, 0,
-        phi, theta, errors[[1]], 0, burnin)
+        phi, theta, errors[[1]], 0, burnin, FALSE)
     
     ts2 <- ts.data.generator(secondHalf, ts1[length(ts1)], delta, 0,
-        phi, theta, errors[[2]], 0, 0)
+        phi, theta, errors[[2]], 0, 0, TRUE)
         
     ts[,i] <- c(ts1, ts2)
   }

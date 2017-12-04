@@ -12,7 +12,7 @@
 #' @importFrom stats ks.test
 #' 
 kolmogorov.smirnov.test <- function(data, alpha) {
-  center <- round(length(data) / 2)
+  center <- as.integer(length(data) / 2)
   x1 <- data[1:center]
   x2 <- data[(center + 1):length(data)]
   

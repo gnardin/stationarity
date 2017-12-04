@@ -24,7 +24,7 @@ Triangle    - c(ERROR_T, lower, upper, mode)}
 
 \item{omega}{Trend on the variance}
 
-\item{seeds}{Vector of the seeds}
+\item{seeds}{Vector of seeds}
 
 \item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }

@@ -7,13 +7,13 @@
 #' @param N Number of time series
 #' @param TS Size of the time series
 #' @param deltas Vector with two mean values
-#' @param phi Vector of autoregressive parameters
-#' @param theta Vector of moving average parameters
+#' @param phi Autoregressive parameter
+#' @param theta Moving average parameter
 #' @param error Type of error and parameters
 #'        Normal      - c(ERROR_N, mean, stdv)
 #'        Exponential - c(ERROR_E, mean, lambda)
 #'        Triangle    - c(ERROR_T, lower, upper, mode)
-#' @param seeds Vector of the seeds
+#' @param seeds Vector of seeds
 #' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
@@ -36,10 +36,10 @@ ts.break.mean <- function(N, TS, deltas, phi, theta, error, seeds, burnin){
     set.seed(seeds[i])
     
     ts1 <- ts.data.generator(firstHalf, 0, deltas[1], 0,
-        phi, theta, error, 0, burnin)
+        phi, theta, error, 0, burnin, FALSE)
     
     ts2 <- ts.data.generator(secondHalf, ts1[length(ts1)], deltas[2], 0,
-        phi, theta, error, 0, 0)
+        phi, theta, error, 0, 0, TRUE)
     
     ts[,i] <- c(ts1, ts2)
   }

@@ -9,10 +9,10 @@
 #' @param phi Vector of autoregressive parameters
 #' @param theta Vector of moving average parameters
 #' @param error Type of error and parameters
-#'        Normal      - c(ERROR_N, mean, )
+#'        Normal      - c(ERROR_N, mean, stdv)
 #'        Exponential - c(ERROR_E, mean, lambda)
 #'        Triangle    - c(ERROR_T, lower, upper, mode)
-#' @param seeds Vector of the seeds
+#' @param seeds Vector of seeds
 #' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
@@ -29,7 +29,7 @@ ts.stationarity <- function(N, TS, delta, phi, theta, error, seeds, burnin){
   ts <- array(0, dim=c(TS, N))
   for(i in 1:N){
     set.seed(seeds[i])
-    ts[,i] <- ts.data.generator(TS, 0, delta, 0, phi, theta, error, 0, burnin)
+    ts[,i] <- ts.data.generator(TS, 0, delta, 0, phi, theta, error, 0, burnin, FALSE)
   }
   
   return(ts)

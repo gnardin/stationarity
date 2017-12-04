@@ -13,7 +13,7 @@
 #'        Normal      - c(ERROR_N, mean, stdv)
 #'        Exponential - c(ERROR_E, mean, lambda)
 #'        Triangle    - c(ERROR_T, lower, upper, mode)
-#' @param seeds Vector of the seeds
+#' @param seeds Vector of seeds
 #' @param burnin Number of samples thrown away at the beginning of time series generation
 #' 
 #' @return N time series of size TS
@@ -24,7 +24,7 @@
 #' 
 #' @export "ts.break.autocorrelation"
 #' 
-ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, error, seeds, burnin){
+ts.break.autocorrelation <- function(N, TS, delta, phis, thetas, error, seeds, burnin){
   
   stopifnot(!is.null(seeds), N > 0, TS > 1, N <= length(seeds),
       length(phis) == 2, length(thetas) == 2)
@@ -37,10 +37,10 @@ ts.break.autocorrelation<- function(N, TS, delta, phis, thetas, error, seeds, bu
     set.seed(seeds[i])
     
     ts1 <- ts.data.generator(fHalf, 0, delta, 0,
-        phis[1], thetas[1], error, 0, burnin)
+        phis[1], thetas[1], error, 0, burnin, FALSE)
     
     ts2 <- ts.data.generator(sHalf, ts1[length(ts1)], delta, 0,
-        phis[2], thetas[2], error, 0, 0)
+        phis[2], thetas[2], error, 0, 0, TRUE)
     
     ts[,i] <- c(ts1, ts2)
   }

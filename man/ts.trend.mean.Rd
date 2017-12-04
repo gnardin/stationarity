@@ -24,7 +24,7 @@ Normal      - c(ERROR_N, mean, stdv)
 Exponential - c(ERROR_E, mean, lambda)
 Triangle    - c(ERROR_T, lower, upper, mode)}
 
-\item{seeds}{Vector of the seeds}
+\item{seeds}{Vector of seeds}
 
 \item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }

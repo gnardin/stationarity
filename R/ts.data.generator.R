@@ -16,12 +16,13 @@
 #'        Triangle    - c(ERROR_T, lower, upper, mode)
 #' @param omega Trend on the variance
 #' @param burnin Number of samples thrown away at the beginning of time series generation
+#' @param continue Continues a previous time series (Supports only AR(1) and NO MOVING AVERAGE)
 #' 
 #' @return Time series of size N
 #' 
 #' @examples
 #' x <- 100
-#' ts.data.generator(x, 0, 0, 0, 1, 0, c(ERROR_N,0,1), 0, 10)
+#' ts.data.generator(x, 0, 0, 0, 1, 0, c(ERROR_N,0,1), 0, 10, TRUE)
 #' 
 #' @importFrom stats rnorm
 #' @importFrom smoothmest rdoublex
@@ -29,7 +30,7 @@
 #' 
 #' @export "ts.data.generator"
 #' 
-ts.data.generator <- function(TS, y0, delta, tau, phi, theta, error, omega, burnin){
+ts.data.generator <- function(TS, y0, delta, tau, phi, theta, error, omega, burnin, continue){
   
   stopifnot(TS > 1, error[1] %in% c(ERROR_N, ERROR_E, ERROR_T))
   
@@ -88,7 +89,19 @@ ts.data.generator <- function(TS, y0, delta, tau, phi, theta, error, omega, burn
     
     ## Dependent variable
     alpha <- tau / TS
-    Y[1] <- y0 + delta + alpha + epsilon[1]
+    
+    if(continue){
+      Y[1] <- delta + alpha + epsilon[1]
+      
+      if(p > 0){
+        ## Incorporate the autoregression
+        for(i in 1:min(p, length(y0))){
+          Y[1] = Y[1] + (phis[1, i] * y0[length(y0) - i + 1])
+        }
+      }
+    } else {
+      Y[1] <- y0 + delta + alpha + epsilon[1]
+    }
     
     for(t in 2:burnin){
       
@@ -122,7 +135,6 @@ ts.data.generator <- function(TS, y0, delta, tau, phi, theta, error, omega, burn
     y0 = Y[length(Y)]
   }
   
-  
   ## Calculate time series
   Y <- vector()
   epsilon <- vector()
@@ -133,15 +145,25 @@ ts.data.generator <- function(TS, y0, delta, tau, phi, theta, error, omega, burn
   } else if(terror == ERROR_E){
     epsilon[1] <- rdoublex(1, mu, (lambda + (omega / TS)))
   } else if(terror == ERROR_T){
-    epsilon[1] <- rtriangle(1, lower, upper, (mode + (omega / TS)))
+    epsilon[1] <- rtriangle(1, lower - (omega / TS),
+        upper + (omega / TS), mode)
   }
-  
-  ## Error
-  
   
   ## Dependent variable
   alpha <- tau / TS
-  Y[1] <- y0 + delta + (alpha * (1 + burnin)) + epsilon[1]
+  
+  if(continue){
+    Y[1] <- delta + (alpha * (1 + burnin)) + epsilon[1]
+    
+    if(p > 0){
+      ## Incorporate the autoregression
+      for(i in 1:min(p, length(y0))){
+        Y[1] = Y[1] + (phis[1, i] * y0[length(y0) - i + 1])
+      }
+    }
+  } else {
+    Y[1] <- y0 + delta + (alpha * (1 + burnin)) + epsilon[1]
+  }
   
   for(t in 2:TS){
     
@@ -151,7 +173,8 @@ ts.data.generator <- function(TS, y0, delta, tau, phi, theta, error, omega, burn
     } else if(terror == ERROR_E){
       epsilon[t] <- rdoublex(1, mu, (lambda + ((omega * t) / TS)))
     } else if(terror == ERROR_T){
-      epsilon[t] <- rtriangle(1, lower, upper, (mode + ((omega * t) / TS)))
+      epsilon[t] <- rtriangle(1, lower - ((omega * t) / TS),
+          upper + ((omega * t) / TS), mode)
     }
     
     ## Dependent variable

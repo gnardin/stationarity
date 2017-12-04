@@ -4,7 +4,8 @@
 \alias{ts.data.generator}
 \title{Time Series Data Generator}
 \usage{
-ts.data.generator(TS, y0, delta, tau, phi, theta, error, omega, burnin)
+ts.data.generator(TS, y0, delta, tau, phi, theta, error, omega, burnin,
+  continue)
 }
 \arguments{
 \item{TS}{Size of the time series}
@@ -27,6 +28,8 @@ Triangle    - c(ERROR_T, lower, upper, mode)}
 \item{omega}{Trend on the variance}
 
 \item{burnin}{Number of samples thrown away at the beginning of time series generation}
+
+\item{continue}{Continues a previous time series (Supports only AR(1) and NO MOVING AVERAGE)}
 }
 \value{
 Time series of size N
@@ -37,6 +40,6 @@ variance trend and different error distributions.
 }
 \examples{
 x <- 100
-ts.data.generator(x, 0, 0, 0, 1, 0, c(ERROR_N,0,1), 0, 10)
+ts.data.generator(x, 0, 0, 0, 1, 0, c(ERROR_N,0,1), 0, 10, TRUE)
 
 }

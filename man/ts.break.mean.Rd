@@ -13,16 +13,16 @@ ts.break.mean(N, TS, deltas, phi, theta, error, seeds, burnin)
 
 \item{deltas}{Vector with two mean values}
 
-\item{phi}{Vector of autoregressive parameters}
+\item{phi}{Autoregressive parameter}
 
-\item{theta}{Vector of moving average parameters}
+\item{theta}{Moving average parameter}
 
 \item{error}{Type of error and parameters
 Normal      - c(ERROR_N, mean, stdv)
 Exponential - c(ERROR_E, mean, lambda)
 Triangle    - c(ERROR_T, lower, upper, mode)}
 
-\item{seeds}{Vector of the seeds}
+\item{seeds}{Vector of seeds}
 
 \item{burnin}{Number of samples thrown away at the beginning of time series generation}
 }
