@@ -44,7 +44,7 @@ ts.break.variance <- function(N, TS, delta, phi, theta, error, seeds, burnin){
     stopifnot(length(error) >= 5)
     errors[[1]] <- c(error[1], error[2], error[3], error[4])
     errors[[2]] <- c(error[1], error[2] - error[5],
-        error[3] + error[5], error[5])
+        error[3] + error[5], error[4])
   }
   
   firstHalf <- as.integer(TS / 2)
