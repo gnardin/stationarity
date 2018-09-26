@@ -11,7 +11,7 @@ BugReports: https://github.com/gnardin/stationarity/issues
 Description: Generates stationary and non-stationary time series and tests stationarity.
 Depends: R (>= 3.3.2), costat
 Imports: urca, tseries, fractal, locits, changepoint, timeSeries, FinTS, lmtest, strucchange, cpm, BootWPTOS, wavethresh, triangle, smoothmest
-License: LGPL (>= 3)
+License: file LICENSE
 LazyData: TRUE
 Encoding: UTF-8
 NeedsCompilation: no
