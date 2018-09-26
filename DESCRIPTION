@@ -1,6 +1,6 @@
 Package: stationarity
 Type: Package
-Date: 2017-11-19
+Date: 2017-09-26
 Title: Time Series Stationarity Test
 Version: 0.2.0
 Author: Luis G. Nardin [aut, cre],
@@ -15,4 +15,4 @@ License: LGPL (>= 3)
 LazyData: TRUE
 Encoding: UTF-8
 NeedsCompilation: no
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
