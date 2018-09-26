@@ -2,7 +2,7 @@ Package: stationarity
 Type: Package
 Date: 2017-09-26
 Title: Time Series Stationarity Test
-Version: 0.2.0
+Version: 0.2.1
 Author: Luis G. Nardin [aut, cre],
         Vasile-Alexandru Suchar [aut]
 Maintainer: Luis G. Nardin <gnardin@gmail.com>
